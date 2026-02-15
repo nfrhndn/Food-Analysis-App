@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Food Analysis App</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Ionicons for Icons -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="mobile-container">
+      <!-- Header -->
+      <header class="app-header">
+        <div class="status-bar">
+          <span>12:06</span>
+          <div class="status-icons">
+            <ion-icon name="cellular"></ion-icon>
+            <ion-icon name="wifi"></ion-icon>
+            <ion-icon name="battery-full"></ion-icon>
+          </div>
+        </div>
+        <div class="header-title-row">
+          <h1>Food Nutrition<br />Composition Analysis</h1>
+          <button
+            class="btn-settings"
+            id="settings-btn"
+            title="API Key Settings"
+          >
+            <ion-icon name="settings-outline"></ion-icon>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Content Area -->
+      <main class="app-content" id="main-content">
+        <!-- Default View: Upload -->
+        <div id="upload-view" class="view active">
+          <p class="instruction-text">
+            Unggah gambar makanan atau minuman yang ingin kamu ketahui komposisi
+            nutrisinya dan kehalalannya
+          </p>
+
+          <div class="upload-area" id="upload-area">
+            <div class="camera-icon-wrapper">
+              <ion-icon name="camera"></ion-icon>
+            </div>
+            <img id="image-preview" src="" alt="Preview" class="hidden" />
+            <input type="file" id="file-input" accept="image/*" hidden />
+          </div>
+
+          <button class="btn-primary" id="analyze-btn" disabled>
+            Analisis Gambar <ion-icon name="sparkles"></ion-icon>
+          </button>
+        </div>
+
+        <!-- Loading View -->
+        <div id="loading-view" class="view hidden">
+          <div class="rocket-loader">
+            <div class="rocket">
+              <ion-icon name="rocket"></ion-icon>
+            </div>
+            <div class="trail"></div>
+          </div>
+          <p class="loading-text">Sedang memproses analisis...</p>
+        </div>
+
+        <!-- Result View -->
+        <div id="result-view" class="view hidden">
+          <div class="result-header">
+            <button class="btn-back" id="back-btn">
+              <ion-icon name="chevron-back"></ion-icon>
+            </button>
+            <h2>Hasil Analisis</h2>
+          </div>
+
+          <div class="result-image-container">
+            <img id="result-image" src="" alt="Analyzed Food" />
+          </div>
+
+          <div class="result-card">
+            <div class="food-info">
+              <div class="food-icon">🍔</div>
+              <div>
+                <h3>Nama Makanan</h3>
+                <p id="food-name">Loading...</p>
+              </div>
+            </div>
+
+            <div class="halal-info">
+              <div class="check-icon">
+                <ion-icon name="checkmark-circle"></ion-icon>
+              </div>
+              <div>
+                <h3>Status Kehalalan</h3>
+                <p id="halal-status">Loading...</p>
+              </div>
+            </div>
+
+            <h3>Komposisi Nutrisi :</h3>
+            <div class="nutrition-grid" id="nutrition-grid">
+              <!-- Nutrition Items will be injected here -->
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Bottom Sheet / Actions -->
+      <div class="bottom-actions" id="bottom-actions">
+        <button class="action-btn" id="camera-btn">
+          <ion-icon name="camera-outline"></ion-icon> Kamera
+        </button>
+        <button class="action-btn" id="gallery-btn">
+          <ion-icon name="image-outline"></ion-icon> Galeri
+        </button>
+      </div>
+
+      <!-- API Key Settings Modal -->
+      <div class="modal-overlay hidden" id="api-key-modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>🔑 API Key Settings</h3>
+            <button class="modal-close" id="modal-close-btn">
+              <ion-icon name="close"></ion-icon>
+            </button>
+          </div>
+          <p class="modal-desc">
+            Masukkan API Key Google Gemini kamu untuk menggunakan fitur
+            analisis. API Key disimpan di browser kamu dan
+            <strong>tidak dikirim ke server manapun</strong> selain Google API.
+          </p>
+          <div class="modal-input-group">
+            <label for="api-key-input">Gemini API Key</label>
+            <div class="input-wrapper">
+              <input
+                type="password"
+                id="api-key-input"
+                placeholder="AIzaSy..."
+                autocomplete="off"
+              />
+              <button
+                class="btn-toggle-visibility"
+                id="toggle-key-visibility"
+                title="Show/Hide"
+              >
+                <ion-icon name="eye-off-outline"></ion-icon>
+              </button>
+            </div>
+          </div>
+          <a
+            href="https://aistudio.google.com/apikey"
+            target="_blank"
+            class="modal-link"
+            >Belum punya? Dapatkan API Key gratis →</a
+          >
+          <button class="btn-primary modal-save-btn" id="save-api-key-btn">
+            Simpan API Key
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
